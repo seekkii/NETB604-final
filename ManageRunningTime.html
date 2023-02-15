@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="sr">
+    <title>project</title>
+    
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+    <script async="" src="script.js"></script>
+    
+</head>
+
+<body style="height: 100%;">
+
+<section id="projects">
+<div class="container">
+  <div class="project-wrapper">
+    <div id="timerow">
+        <div class="project-wrapper__text" style="visibility: visible;">
+            <span>
+            <div>
+                <h3 class="project-wrapper__text-title">Performance API 🚀</h3>
+                <p><a href = "https://developer.mozilla.org/en-US/docs/Web/API/Performance" class = "text-color-link project-wrapper__text">The Performance interface</a> provides access to performance-related information for the current page. It's part of the High 
+                    Resolution Time API, but is enhanced by the Performance Timeline API, the Navigation Timing API, the User Timing API, and the Resource Timing API.</p>
+                <p>The Performance API benefits from many diverse and varied methods. In our case we will only need 5 different methods:</p>
+                <ul>
+                    <li> mark</li>
+                    <li>measure</li>
+                    <li>getEntriesByType</li>
+                    <li>clearMarks / clearMeasures</li>
+                </ul><br>
+                <h1>1. mark</h1><br>
+                <p>The mark method allows us to place a time marker. It takes only one argument (string) to reference the marker and returns nothing. This will allow us to calculate a time later.</p>
+                <pre class="code">
+                    <code class=" language-javascript">performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+                <h1>2. measure</h1><br>
+                <p>The measure method allows to measure a time difference between two markers. It takes 3 arguments: the name of the created measure (string), the start marker (string), the end marker (string). This method returns an object with a duration property that calculates the difference between two markers.</p>
+                <pre class=" code"><code class=" language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">timeDuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">await</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve <span class="token operator">=&gt;</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+                <span class="token keyword">return</span> performance<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span><span class="token string">'time'</span><span class="token punctuation">,</span> <span class="token string">'start'</span><span class="token punctuation">,</span> <span class="token string">'end'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+      
+                <span class="token function">timeDuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// output: 100</span></code>
+
+                 }
+    
+                timeDuration().then((result) => console.log(result));
+                // output: 100
+            </pre>
+                <h1> 3. getEntriesByType </h1><br>
+                <p>The method getEntriesByType allows to access all entities of a certain type created. 
+                    It returns an array of objects and takes as argument the type of input (string) among 
+                    the following: frame, navigation, resource, mark, measure, paint & longtask.</p>
+    
+                <pre class=" code"><code class=" language-javascript">performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'measure'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// output: return an Array of Object containing all the measure</span></code></pre>
+                <h1>4. clearMarks / clearMeasures</h1>
+                <p>The clearMarks / clearMeasures methods are used to remove previously added markers and measures from the browser cache. These methods do not return anything and do not take any arguments.</p>
+    
+                <pre class=" code"><code class=" language-javascript">performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    performance<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span><span class="token string">'time_duration'</span><span class="token punctuation">,</span> <span class="token string">'start'</span><span class="token punctuation">,</span> <span class="token string">'end'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'mark'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// output: 2</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'measure'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// output: 1</span>
+        
+                    performance<span class="token punctuation">.</span><span class="token function">clearMarks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    performance<span class="token punctuation">.</span><span class="token function">clearMeasures</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'mark'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// output: 0</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'measure'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// output: 0</span></code>
+                </pre>
+            </div><br>
+            
+
+            <h1 class = "project-wrapper__text-title">Code example</h1><br>
+            <p>Now that we know the methods to implement the functionality we need to integrate it into the existing code. 
+                We have two possibilities: create the markers and perform the measurements directly in the places in the 
+                desired code, or create a service (time-tracker.js) and inject it into the code. For the sake of clarity 
+                we will choose the second option.</p>
+                <pre class="code"><code class=" language-javascript">
+                    <span class="token keyword">export</span> <span class="token keyword">default</span> Service<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                    
+                      <span class="token function">clearMarks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        performance<span class="token punctuation">.</span><span class="token function">clearMarks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">startInterface</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'timing_interface_start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">stopInterface</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'timing_interface_stop'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">measureTimingInterface</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">return</span> performance<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span>
+                          <span class="token string">'timing_interface'</span><span class="token punctuation">,</span>
+                          <span class="token string">'timing_interface_start'</span><span class="token punctuation">,</span>
+                          <span class="token string">'timing_interface_stop'</span>
+                        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">startRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'timing_request_start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">stopRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        performance<span class="token punctuation">.</span><span class="token function">mark</span><span class="token punctuation">(</span><span class="token string">'timing_request_stop'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    
+                      <span class="token function">measureTimingRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">return</span> performance<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span>
+                          <span class="token string">'timing_request'</span><span class="token punctuation">,</span>
+                          <span class="token string">'timing_request_start'</span><span class="token punctuation">,</span>
+                          <span class="token string">'timing_request_stop'</span>
+                        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+            
+            </span>
+        </div>
+    
+    </div>
+  </div>
+</div>
+     
+</section>
+
+
+</body>
+</html>
